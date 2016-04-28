@@ -3,7 +3,7 @@
 
     <sitemap>
         <loc>http://honoka.me/post-sitemap.xml</loc>
-        <lastmod>2016-04-28T15:33:03.000Z</lastmod>
+        <lastmod>2016-04-28T15:39:33.000Z</lastmod>
     </sitemap>
 
     <sitemap>
@@ -13,12 +13,12 @@
 
     <sitemap>
         <loc>http://honoka.me/category-sitemap.xml</loc>
-        <lastmod>2016-04-28T15:33:03.000Z</lastmod>
+        <lastmod>2016-04-28T15:39:33.000Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>http://honoka.me/tag-sitemap.xml</loc>
-        <lastmod>2016-04-28T15:33:03.000Z</lastmod>
+        <lastmod>2016-04-28T15:39:33.000Z</lastmod>
     </sitemap>
 
 </sitemapindex>
