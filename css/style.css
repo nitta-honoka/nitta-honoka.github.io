@@ -693,6 +693,8 @@ code {
   background: #49c8fb;
 }
 #profile .inner .article-info {
+  display: flex;
+  justify-content: space-between;
   padding: 0px;
 }
 #profile .inner .article-info:before,
@@ -704,8 +706,6 @@ code {
   clear: both;
 }
 #profile .inner .article-info .article-info-block {
-  width: 50%;
-  float: left;
   padding: 20px 15px;
   text-align: center;
   -webkit-box-sizing: border-box;
@@ -717,9 +717,6 @@ code {
   display: block;
   font-size: 14px;
   text-transform: uppercase;
-}
-#profile .inner .article-info .article-info-block:first-child {
-  border-right: 1px solid #eceff2;
 }
 #profile .inner .social-links > table {
   width: 100%;
