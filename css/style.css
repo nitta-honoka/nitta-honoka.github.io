@@ -705,7 +705,6 @@ code {
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
   justify-content: space-between;
-  padding: 20px 0;
 }
 #profile .inner .article-info:before,
 #profile .inner .article-info:after {
@@ -715,14 +714,15 @@ code {
 #profile .inner .article-info:after {
   clear: both;
 }
-#profile .inner .article-info .article-info-blockins {
+#profile .inner .article-info .article-info-block {
+  padding: 20px 15px;
   text-align: center;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   font-size: 20px;
 }
-#profile .inner .article-info .article-info-blockins span {
+#profile .inner .article-info .article-info-block span {
   display: block;
   font-size: 14px;
   text-transform: uppercase;

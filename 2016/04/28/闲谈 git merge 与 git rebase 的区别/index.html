@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="honokaのthinking garden">
 <meta property="og:description" content="相信大部分使用 Git 的朋友都会遇见相同的疑问，并且也从网上搜索了不少资料。那么，为什么我还要写这篇文章呢？因为我想尝试从自己的角度解释这个问题，如果能给到大家灵光一闪的感悟，便善莫大焉啦。估计点进来的朋友也对 merge 和 rebase 有了一定了解，所以我也就不浪费篇幅再去详细介绍 merge 和 rebase，让我们直入主题吧。">
 <meta property="og:image" content="http://7xinvi.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2021.58.22.png">
-<meta property="og:updated_time" content="2016-05-29T05:13:38.000Z">
+<meta property="og:updated_time" content="2016-05-29T05:35:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="闲谈 git merge 与 git rebase 的区别">
 <meta name="twitter:description" content="相信大部分使用 Git 的朋友都会遇见相同的疑问，并且也从网上搜索了不少资料。那么，为什么我还要写这篇文章呢？因为我想尝试从自己的角度解释这个问题，如果能给到大家灵光一闪的感悟，便善莫大焉啦。估计点进来的朋友也对 merge 和 rebase 有了一定了解，所以我也就不浪费篇幅再去详细介绍 merge 和 rebase，让我们直入主题吧。">
@@ -235,6 +235,11 @@ ga('send', 'pageview');
         <a class="tag-link" href="/tags/Git/">Git</a>
     </div>
 
+                    // <div class="article-count">
+        <i class="fa fa-book"></i>
+            <span id="busuanzi_value_page_pv"></span>
+</div>
+
                 </div>
             </header>
         
@@ -246,7 +251,7 @@ ga('send', 'pageview');
 <h2 id="merge-与-rebase-的区别"><a href="#merge-与-rebase-的区别" class="headerlink" title="merge 与 rebase 的区别"></a>merge 与 rebase 的区别</h2><h3 id="merge-以下说明都基于-merge-的默认操作"><a href="#merge-以下说明都基于-merge-的默认操作" class="headerlink" title="merge(以下说明都基于 merge 的默认操作)"></a>merge(以下说明都基于 merge 的默认操作)</h3><p>现在假设我们有一个主分支 master 及一个开发分支 deve，仓库历史就像这样：</p>
 <p><img src="http://7xinvi.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2021.58.22.png" alt="初始仓库历史"></p>
 <p>现在如果在 master 分支上 <code>git merge deve</code>：Git 会自动根据两个分支的共同祖先即 <code>e381a81</code> 这个 commit 和两个分支的最新提交即 <code>8ab7cff</code> 和 <code>696398a</code> 进行一个三方合并，然后将<strong>合并中修改的内容生成一个新的 commit</strong>，即下图的 <code>78941cb</code>。</p>
-<p><img src="http://7xinvi.com1.z0.glb.clouddn.com/hexo%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2022.08.28.png" alt="merge 合并图"> </p>
+<p><img src="http://7xinvi.com1.z0.glb.clouddn.com/hexo%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2022.08.28.png" alt="merge 合并图"></p>
 <h3 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h3><p>rebase 是什么情况呢？还是一个初始的仓库历史图：</p>
 <p><img src="http://7xinvi.com1.z0.glb.clouddn.com/hexo%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2022.20.15.png" alt="rebase初始仓库历史"></p>
 <p>如果是在 master 分支上 <code>git rebase deve</code>：Git 会从两个分支的共同祖先 <code>3311ba0</code> 开始提取 master 分支（当前所在分支）上的修改，即 <code>85841be</code>、<code>a016f64</code> 与 <code>e53ec51</code>，再将 master 分支指向 deve 的最新提交（目标分支）即 <code>35b6708</code> 处，然后将刚刚提取的修改依次应用到这个最新提交后面。操作会舍弃 master 分支上提取的 commit，同时<strong>不会像 merge 一样生成一个合并修改内容的 commit，相当于把 master 分支（当前所在分支）上的修改在 deve 分支（目标分支）上原样复制了一遍</strong>,操作完成后的版本历史就像这样：</p>
@@ -269,7 +274,7 @@ ga('send', 'pageview');
 <li>merge 的提交历史忠实地记录了实际发生过什么，关注点在真实的提交历史上面</li>
 <li>rebase 并没有进行合并操作，只是提取了当前分支的修改，将其复制在了目标分支的最新提交后面</li>
 <li>rebase 的提交历史反映了项目过程中发生了什么，关注点在开发过程上面</li>
-<li>merge 与 rebase 都是非常强大的分支整合命令，没有优劣之分，使用哪一个应由项目和团队的开发需求决定。但是在大部分情况下，个人建议使用 rebase + merge –ff-only 的组合，这样可以使整个版本历史更加简洁，在大型项目中的效果可以参考 GO 的版本历史。 </li>
+<li>merge 与 rebase 都是非常强大的分支整合命令，没有优劣之分，使用哪一个应由项目和团队的开发需求决定。但是在大部分情况下，个人建议使用 rebase + merge –ff-only 的组合，这样可以使整个版本历史更加简洁，在大型项目中的效果可以参考 GO 的版本历史。</li>
 <li>merge 和 rebase 还有很多强大的选项，可以使用 <code>git help &lt;command&gt;</code> 查看</li>
 </ul>
 <h2 id="最后：一些注意点"><a href="#最后：一些注意点" class="headerlink" title="最后：一些注意点"></a>最后：一些注意点</h2><ul>
@@ -298,7 +303,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://honoka.me/2016/04/28/闲谈 git merge 与 git rebase 的区别/" data-id="cios501w20000650qswtw2e3t" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://honoka.me/2016/04/28/闲谈 git merge 与 git rebase 的区别/" data-id="cios5kv820000ri0qushndvh8" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -522,7 +527,10 @@ ga('send', 'pageview');
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
 </footer>
+
         
     
     <script type="text/javascript">

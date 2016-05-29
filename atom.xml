@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://honoka.me/"/>
-  <updated>2016-05-29T05:13:38.000Z</updated>
+  <updated>2016-05-29T05:35:41.000Z</updated>
   <id>http://honoka.me/</id>
   
   <author>
@@ -20,14 +20,14 @@
     <link href="http://honoka.me/2016/04/28/%E9%97%B2%E8%B0%88%20git%20merge%20%E4%B8%8E%20git%20rebase%20%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
     <id>http://honoka.me/2016/04/28/闲谈 git merge 与 git rebase 的区别/</id>
     <published>2016-04-28T15:21:36.000Z</published>
-    <updated>2016-05-29T05:13:38.000Z</updated>
+    <updated>2016-05-29T05:35:41.000Z</updated>
     
     <content type="html">&lt;p&gt;相信大部分使用 Git 的朋友都会遇见相同的疑问，并且也从网上搜索了不少资料。那么，为什么我还要写这篇文章呢？因为我想尝试从自己的角度解释这个问题，如果能给到大家灵光一闪的感悟，便善莫大焉啦。估计点进来的朋友也对 merge 和 rebase 有了一定了解，所以我也就不浪费篇幅再去详细介绍 merge 和 rebase，让我们直入主题吧。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;merge-与-rebase-的区别&quot;&gt;&lt;a href=&quot;#merge-与-rebase-的区别&quot; class=&quot;headerlink&quot; title=&quot;merge 与 rebase 的区别&quot;&gt;&lt;/a&gt;merge 与 rebase 的区别&lt;/h2&gt;&lt;h3 id=&quot;merge-以下说明都基于-merge-的默认操作&quot;&gt;&lt;a href=&quot;#merge-以下说明都基于-merge-的默认操作&quot; class=&quot;headerlink&quot; title=&quot;merge(以下说明都基于 merge 的默认操作)&quot;&gt;&lt;/a&gt;merge(以下说明都基于 merge 的默认操作)&lt;/h3&gt;&lt;p&gt;现在假设我们有一个主分支 master 及一个开发分支 deve，仓库历史就像这样：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xinvi.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2021.58.22.png&quot; alt=&quot;初始仓库历史&quot;&gt;&lt;/p&gt;
 &lt;p&gt;现在如果在 master 分支上 &lt;code&gt;git merge deve&lt;/code&gt;：Git 会自动根据两个分支的共同祖先即 &lt;code&gt;e381a81&lt;/code&gt; 这个 commit 和两个分支的最新提交即 &lt;code&gt;8ab7cff&lt;/code&gt; 和 &lt;code&gt;696398a&lt;/code&gt; 进行一个三方合并，然后将&lt;strong&gt;合并中修改的内容生成一个新的 commit&lt;/strong&gt;，即下图的 &lt;code&gt;78941cb&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xinvi.com1.z0.glb.clouddn.com/hexo%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2022.08.28.png&quot; alt=&quot;merge 合并图&quot;&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xinvi.com1.z0.glb.clouddn.com/hexo%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2022.08.28.png&quot; alt=&quot;merge 合并图&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;rebase&quot;&gt;&lt;a href=&quot;#rebase&quot; class=&quot;headerlink&quot; title=&quot;rebase&quot;&gt;&lt;/a&gt;rebase&lt;/h3&gt;&lt;p&gt;rebase 是什么情况呢？还是一个初始的仓库历史图：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7xinvi.com1.z0.glb.clouddn.com/hexo%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-04-26%2022.20.15.png&quot; alt=&quot;rebase初始仓库历史&quot;&gt;&lt;/p&gt;
 &lt;p&gt;如果是在 master 分支上 &lt;code&gt;git rebase deve&lt;/code&gt;：Git 会从两个分支的共同祖先 &lt;code&gt;3311ba0&lt;/code&gt; 开始提取 master 分支（当前所在分支）上的修改，即 &lt;code&gt;85841be&lt;/code&gt;、&lt;code&gt;a016f64&lt;/code&gt; 与 &lt;code&gt;e53ec51&lt;/code&gt;，再将 master 分支指向 deve 的最新提交（目标分支）即 &lt;code&gt;35b6708&lt;/code&gt; 处，然后将刚刚提取的修改依次应用到这个最新提交后面。操作会舍弃 master 分支上提取的 commit，同时&lt;strong&gt;不会像 merge 一样生成一个合并修改内容的 commit，相当于把 master 分支（当前所在分支）上的修改在 deve 分支（目标分支）上原样复制了一遍&lt;/strong&gt;,操作完成后的版本历史就像这样：&lt;/p&gt;
@@ -50,7 +50,7 @@
 &lt;li&gt;merge 的提交历史忠实地记录了实际发生过什么，关注点在真实的提交历史上面&lt;/li&gt;
 &lt;li&gt;rebase 并没有进行合并操作，只是提取了当前分支的修改，将其复制在了目标分支的最新提交后面&lt;/li&gt;
 &lt;li&gt;rebase 的提交历史反映了项目过程中发生了什么，关注点在开发过程上面&lt;/li&gt;
-&lt;li&gt;merge 与 rebase 都是非常强大的分支整合命令，没有优劣之分，使用哪一个应由项目和团队的开发需求决定。但是在大部分情况下，个人建议使用 rebase + merge –ff-only 的组合，这样可以使整个版本历史更加简洁，在大型项目中的效果可以参考 GO 的版本历史。 &lt;/li&gt;
+&lt;li&gt;merge 与 rebase 都是非常强大的分支整合命令，没有优劣之分，使用哪一个应由项目和团队的开发需求决定。但是在大部分情况下，个人建议使用 rebase + merge –ff-only 的组合，这样可以使整个版本历史更加简洁，在大型项目中的效果可以参考 GO 的版本历史。&lt;/li&gt;
 &lt;li&gt;merge 和 rebase 还有很多强大的选项，可以使用 &lt;code&gt;git help &amp;lt;command&amp;gt;&lt;/code&gt; 查看&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;最后：一些注意点&quot;&gt;&lt;a href=&quot;#最后：一些注意点&quot; class=&quot;headerlink&quot; title=&quot;最后：一些注意点&quot;&gt;&lt;/a&gt;最后：一些注意点&lt;/h2&gt;&lt;ul&gt;
