@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://honoka.me/"/>
-  <updated>2016-04-28T15:57:56.000Z</updated>
+  <updated>2016-05-29T05:13:38.000Z</updated>
   <id>http://honoka.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://honoka.me/2016/04/28/%E9%97%B2%E8%B0%88%20git%20merge%20%E4%B8%8E%20git%20rebase%20%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
     <id>http://honoka.me/2016/04/28/闲谈 git merge 与 git rebase 的区别/</id>
     <published>2016-04-28T15:21:36.000Z</published>
-    <updated>2016-04-28T15:57:56.000Z</updated>
+    <updated>2016-05-29T05:13:38.000Z</updated>
     
     <content type="html">&lt;p&gt;相信大部分使用 Git 的朋友都会遇见相同的疑问，并且也从网上搜索了不少资料。那么，为什么我还要写这篇文章呢？因为我想尝试从自己的角度解释这个问题，如果能给到大家灵光一闪的感悟，便善莫大焉啦。估计点进来的朋友也对 merge 和 rebase 有了一定了解，所以我也就不浪费篇幅再去详细介绍 merge 和 rebase，让我们直入主题吧。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -73,10 +73,10 @@
     
     </summary>
     
-      <category term="编程思考" scheme="http://honoka.me/categories/%E7%BC%96%E7%A8%8B%E6%80%9D%E8%80%83/"/>
+      <category term="编程技术" scheme="http://honoka.me/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="版本管理" scheme="http://honoka.me/tags/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/"/>
+      <category term="Git" scheme="http://honoka.me/tags/Git/"/>
     
   </entry>
   
