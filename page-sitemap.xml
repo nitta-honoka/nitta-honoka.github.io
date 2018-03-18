@@ -7,6 +7,13 @@
     </url>
     
     <url>
+        <loc>http://honoka.me/404.html</loc>
+        <lastmod>2018-03-18T16:42:36.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>http://honoka.me/about/index.html</loc>
         <lastmod>2016-04-27T15:34:43.000Z</lastmod>
         <changefreq>weekly</changefreq>
