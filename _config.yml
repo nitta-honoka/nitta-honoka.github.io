@@ -63,15 +63,15 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next-reloaded
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
   repo:
-    github: https://github.com/nitta-honoka/nitta-honoka.github.io
-    coding: https://git.coding.net/honoka/honoka.git
+    github: git@github.com:nitta-honoka/nitta-honoka.github.io.git
+    # coding: https://git.coding.net/honoka/honoka.git
   branch: master
 
 # search:
