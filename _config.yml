@@ -127,10 +127,10 @@ theme_config:
   # For example, you put your favicons into `hexo-site/source/images` directory.
   # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
   favicon:
-    small: http://7xinvi.com1.z0.glb.clouddn.com/favicon.ico
-    medium: http://7xinvi.com1.z0.glb.clouddn.com/favicon.ico
-    apple_touch_icon: /images/apple-touch-icon-next.png
-    safari_pinned_tab: /images/logo.svg
+    small: //ph15i5c7m.bkt.clouddn.com/favicon.ico
+    medium: //ph15i5c7m.bkt.clouddn.com/favicon.ico
+    # apple_touch_icon: /images/apple-touch-icon-next.png
+    # safari_pinned_tab: /images/logo.svg
     #android_manifest: /images/manifest.json
     #ms_browserconfig: /images/browserconfig.xml
 
@@ -268,7 +268,7 @@ theme_config:
   # Sidebar Avatar
   # in theme directory(source/images): /images/avatar.gif
   # in site  directory(source/uploads): /uploads/avatar.gif
-  avatar: http://7xinvi.com1.z0.glb.clouddn.com/20140802132201_z3JTX.jpeg
+  avatar: //ph15i5c7m.bkt.clouddn.com/Avator.jpeg
   #avatar: /images/avatar.gif
 
   # Table Of Contents in the Sidebar
