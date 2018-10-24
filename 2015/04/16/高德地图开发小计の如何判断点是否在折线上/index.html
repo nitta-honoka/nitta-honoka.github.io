@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="xoKvbxtxadLapARV8wgjZoLjI-rhMknYaNrvNTGr-T8">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="http://7xinvi.com1.z0.glb.clouddn.com/favicon.ico?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="http://7xinvi.com1.z0.glb.clouddn.com/favicon.ico?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="LBS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="高德地图开发中的一个问题解决小记">
+<meta name="keywords" content="LBS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高德地图开发小记の如何判断点是否在折线上">
+<meta property="og:url" content="http://honoka.me/2015/04/16/高德地图开发小计の如何判断点是否在折线上/index.html">
+<meta property="og:site_name" content="honokaのthinking garden">
+<meta property="og:description" content="高德地图开发中的一个问题解决小记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7xinvi.com1.z0.glb.clouddn.com/%E7%90%86%E6%83%B3%E4%B8%89%E8%A7%92.png">
+<meta property="og:image" content="http://7xinvi.com1.z0.glb.clouddn.com/%E7%89%B9%E6%AE%8A%E4%B8%89%E8%A7%92.png">
+<meta property="og:image" content="http://7xinvi.com1.z0.glb.clouddn.com/%E7%BB%8F%E7%9B%B8%E5%90%8C%E9%94%99%E8%AF%AF.png">
+<meta property="og:image" content="http://7xinvi.com1.z0.glb.clouddn.com/%E7%BA%AC%E7%9B%B8%E5%90%8C%E9%94%99%E8%AF%AF.png">
+<meta property="og:updated_time" content="2018-10-24T03:09:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高德地图开发小记の如何判断点是否在折线上">
+<meta name="twitter:description" content="高德地图开发中的一个问题解决小记">
+<meta name="twitter:image" content="http://7xinvi.com1.z0.glb.clouddn.com/%E7%90%86%E6%83%B3%E4%B8%89%E8%A7%92.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://honoka.me/2015/04/16/高德地图开发小计の如何判断点是否在折线上/">
+
+
+
+
+
+  <title>高德地图开发小记の如何判断点是否在折线上 | honokaのthinking garden</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-77043045-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d8e4d179fdbe3f6a0f1d48767938c2d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">honokaのthinking garden</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://honoka.me/2015/04/16/高德地图开发小计の如何判断点是否在折线上/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="honoka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xinvi.com1.z0.glb.clouddn.com/20140802132201_z3JTX.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="honokaのthinking garden">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">高德地图开发小记の如何判断点是否在折线上</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-16T23:08:24+08:00">
+                2015-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端技术/" itemprop="url" rel="index">
+                    <span itemprop="name">前端技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/04/16/高德地图开发小计の如何判断点是否在折线上/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2015/04/16/高德地图开发小计の如何判断点是否在折线上/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>高德地图开发中的一个问题解决小记<br><a id="more"></a></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>最近使用高德地图 JavaScript API 开发地图应用，提炼了不少心得，故写点博文，做个系列总结一下，希望能帮助到 LBS 开发同胞们。</p>
+<p>项目客户端使用高德地图 JavaScript API，主要业务为以区县为基础自由划分区域，并将划分好的区域存入数据库，以作后续操作。</p>
+<p>开发之初便遇见一个问题，客户可以在城市区县范围内自由划分自己需要的区域，但是高德地图并未提供自定义区域的实现方法，所以只能借助 API 自造轮子。</p>
+<p>经过讨论得出一个实现方法，初始加载城市区县区域后，自定义折线对象，然后在区域内通过鼠标点击画出折线，再将该折线对象和已有区域边界的路径值一起保存进数据库，便能够构成划分后的两个新区域了。</p>
+<p>研究出实现方法后，遇见了一个难题，如何判断鼠标点击的点是否在折线上：</p>
+<ul>
+<li>画起点和终点时必须在原有区域线上，否则无法形成新的封闭空间。故需要判断鼠标点击的点是否在原有折线上，在就让其成为起点或终点，不在则让其重新点击。</li>
+<li>但是用户点击时无法保证完全点击在原有折线上，故需要允许一定的误差，在误差内则判断为点在折线上，误差外让其重新点击。</li>
+<li>判断为在误差内后，鼠标点终究不在折线上，此时需要在原折线上生成一个新的点（离该鼠标点最近的点）</li>
+</ul>
+<h3 id="初期方案"><a href="#初期方案" class="headerlink" title="初期方案"></a>初期方案</h3><p>一开始希望通过判断折线上每两个相邻点与鼠标点三点共线则证明点在折线上，参阅《代码之美》后，发现了两种解决算法：</p>
+<ul>
+<li>一种是判断斜率相等，但是由于以下问题被《代码之美》否决，并提出了更加优化的方法。 <ul>
+<li>判断斜率相等存在多种特殊情况，如两点经度相等或者纬度相等时，代码实现过于繁琐。</li>
+<li>斜率使用除法计算为浮点数，存在一定误差。</li>
+</ul>
+</li>
+<li>更优化的方法为三点可以组成一个三角形，当三角形面积接近于0时，则判断点在线上。具体细节可以参看《代码之美》第33章。在实际运用中，发现如果只存在三个点时，计算三角形面积毫无疑问是一个优秀的算法。</li>
+</ul>
+<p>但是如前文提到的，鼠标点无法精确点击在折线上，故需要允许一定误差，也就是说三角形面积无法等于0，只能遍历折线每两个相邻点，计算鼠标点与两点组成的三角形面积，取出最小的面积，当其小于一个误差值时，点在折线上。</p>
+<p>这样就可能会产生缺陷。一个折线对象存在着数以千计的相邻点，当鼠标点与折线上某两个相邻点组成的三角形面积最小时，却无法保证该点一定离这两个相邻点最近。</p>
+<ul>
+<li><p>理想情况下是这样的。</p>
+<p>  <img src="http://7xinvi.com1.z0.glb.clouddn.com/%E7%90%86%E6%83%B3%E4%B8%89%E8%A7%92.png" alt="理想情况示意图"></p>
+<p>  三角形面积最小，并且鼠标点离该两点组成的线段最近。</p>
+</li>
+<li><p>而特殊情况下会是这样的.</p>
+<p> <img src="http://7xinvi.com1.z0.glb.clouddn.com/%E7%89%B9%E6%AE%8A%E4%B8%89%E8%A7%92.png" alt="特殊情况示意图"></p>
+<p> 三角形面积同样最小，但鼠标点其实离线段较远。</p>
+</li>
+</ul>
+<h3 id="他山之石"><a href="#他山之石" class="headerlink" title="他山之石"></a>他山之石</h3><p>无奈只能另寻解决方法，然后在百度 LBS 开源库中发现几何运算类提供了判断线是否在折线上的方法 <code>isPointOnPolyline()</code>，大喜，赶紧研究一番，应用在项目中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断点是否在矩形内</span></span><br><span class="line"><span class="comment"> * @param &#123;Point&#125; point 点对象</span></span><br><span class="line"><span class="comment"> * @param &#123;Bounds&#125; bounds 矩形边界对象</span></span><br><span class="line"><span class="comment"> * @returns &#123;Boolean&#125; 点在矩形内返回true,否则返回false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPointInRect</span>(<span class="params">point, bounds</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> sw = bounds.getSouthWest(); <span class="comment">//西南脚点</span></span><br><span class="line">    <span class="keyword">var</span> ne = bounds.getNorthEast(); <span class="comment">//东北脚点</span></span><br><span class="line">    <span class="keyword">return</span> (point.lng &gt;= sw.lng &amp;&amp; point.lng &lt;= ne.lng &amp;&amp; point.lat &gt;= sw.lat &amp;&amp; point.lat &lt;= ne.lat);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断点是否在折线上</span></span><br><span class="line"><span class="comment"> * @param &#123;Point&#125; point 点对象</span></span><br><span class="line"><span class="comment"> * @param &#123;Polyline&#125; polyline 折线对象</span></span><br><span class="line"><span class="comment"> * @returns &#123;Boolean&#125; 点在折线上返回true,否则返回false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPointOnPolyline</span>(<span class="params">point, polyline</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//首先判断点是否在线的外包矩形内，如果在，则进一步判断，否则返回false</span></span><br><span class="line">    <span class="keyword">var</span> lineBounds = polyline.getBounds();</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.isPointInRect(point, lineBounds)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断点是否在线段上，设点为Q，线段为P1P2 ，</span></span><br><span class="line">    <span class="comment">//判断点Q在该线段上的依据是：( Q - P1 ) × ( P2 - P1 ) = 0，且 Q 在以 P1，P2为对角顶点的矩形内</span></span><br><span class="line">    <span class="keyword">var</span> pts = polyline.getPath();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; pts.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> curPt = pts[i];</span><br><span class="line">        <span class="keyword">var</span> nextPt = pts[i + <span class="number">1</span>];</span><br><span class="line">        <span class="comment">// 首先判断point是否在curPt和nextPt之间，即：此判断该点是否在该线段的外包矩形内，先判断离point最近的两个相邻点，再进行斜率计算，有效避免干扰</span></span><br><span class="line">        <span class="keyword">if</span> (point.lng &gt;= <span class="built_in">Math</span>.min(curPt.lng, nextPt.lng) &amp;&amp; point.lng &lt;= <span class="built_in">Math</span>.max(curPt.lng, nextPt.lng) &amp;&amp;</span><br><span class="line">            point.lat &gt;= <span class="built_in">Math</span>.min(curPt.lat, nextPt.lat) &amp;&amp; point.lat &lt;= <span class="built_in">Math</span>.max(curPt.lat, nextPt.lat)) &#123;</span><br><span class="line">            <span class="comment">//判断点是否在直线上公式，此处使用减法计算两个斜率之差，有效地简化了特殊情况的判断</span></span><br><span class="line">            <span class="keyword">var</span> precision = (curPt.lng - point.lng) * (nextPt.lat - point.lat) -</span><br><span class="line">                (nextPt.lng - point.lng) * (curPt.lat - point.lat);</span><br><span class="line">            <span class="keyword">if</span> (precision &lt; <span class="number">2e-10</span> &amp;&amp; precision &gt; <span class="number">-2e-10</span>) &#123;<span class="comment">//实质判断是否接近0</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测一测项目，哈哈，可行，长舒一口气。正准备好好放松下，OMG！又遇见缺陷了。</p>
+<ul>
+<li><p>如下图北京西城区存在的一个情况：</p>
+<p>  <img src="http://7xinvi.com1.z0.glb.clouddn.com/%E7%BB%8F%E7%9B%B8%E5%90%8C%E9%94%99%E8%AF%AF.png" alt="北京西城区缺陷演示"></p>
+<p>  此时折线上相邻两点的经度几乎相等。</p>
+</li>
+<li><p>或者北京丰台区存在的情况：</p>
+<p>  <img src="http://7xinvi.com1.z0.glb.clouddn.com/%E7%BA%AC%E7%9B%B8%E5%90%8C%E9%94%99%E8%AF%AF.png" alt="北京丰台区缺陷演示"></p>
+<p>  此时折线上相邻两点的纬度几乎相等。</p>
+</li>
+</ul>
+<p>由于方法优先判断鼠标点是否在折线某相邻两点的外包矩形内，但是上述两种情况下，相邻两点的外包矩形几乎为0，则鼠标点只有在精确点击到折线的情况下才会判断为true。这与实际开发中要求允许一定误差是相悖的，无奈只能另寻解决方法。</p>
+<h3 id="最终解决"><a href="#最终解决" class="headerlink" title="最终解决"></a>最终解决</h3><p>皇天不负有心人，在两次推翻实现算法后，终于又找到一种解决方法。遍历折线对象取出所有相邻点，计算鼠标点到每两个相邻点组成的线段的最短距离，然后排序最短距离，取出其中最小的距离，如果小于误差范围，则判断点在折线上。如果需要闭合区间，则在折线上生成一个离鼠标点最近的折线点（一般取垂足经纬度）。实现代码如下（代码已分享至 <a href="https://github.com/nitta-honoka/LBSUtilsExtension" target="_blank" rel="noopener">github</a>）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 两点之间的距离</span></span><br><span class="line"><span class="comment"> * @param x1 第一个点的经度</span></span><br><span class="line"><span class="comment"> * @param y1 第一个点的纬度</span></span><br><span class="line"><span class="comment"> * @param x2 第二个点的经度</span></span><br><span class="line"><span class="comment"> * @param y2 第二个点的纬度</span></span><br><span class="line"><span class="comment"> * @returns distance 两点之间的距离</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getPoToPoDis</span>(<span class="params">x1, y1, x2, y2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 点到折线上相邻两点组成的线段的最短距离</span></span><br><span class="line"><span class="comment"> * @param point 点坐标</span></span><br><span class="line"><span class="comment"> * @param curPt 折线点坐标</span></span><br><span class="line"><span class="comment"> * @param nextPt 与 curPt 相邻的折线点坐标</span></span><br><span class="line"><span class="comment"> * @returns distance 距离</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getPoToLineDis</span>(<span class="params">point, curPt, nextPt</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="attr">lng</span>: xCur, <span class="attr">lat</span>: yCur &#125; = curPt <span class="comment">// 折线点经纬度，将此点记作 P1</span></span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="attr">lng</span>: xNext, <span class="attr">lat</span>: yNext &#125; = nextPt <span class="comment">// 相邻折线点经纬度，将此点记作 P2</span></span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="attr">lng</span>: xPoint, <span class="attr">lat</span>: yPoint &#125; = point <span class="comment">// 外点经纬度，将此点记作 P</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> lengthCurToNext = getPoToPoDis(xCur, yCur, xNext, yNext); <span class="comment">// P1 到 P2 的长度，记作 a 线段</span></span><br><span class="line">    <span class="keyword">const</span> lengthCurToPo = getPoToPoDis(xCur, yCur, xPoint, yPoint); <span class="comment">// P1 到 P 的长度，记作 b 线段</span></span><br><span class="line">    <span class="keyword">const</span> lengthNextToPo = getPoToPoDis(xNext, yNext, xPoint, yPoint); <span class="comment">// P2 到 P 的长度，记作 c 线段</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> distance = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> (lengthNextToPo + lengthCurToPo === lengthCurToNext) &#123;</span><br><span class="line">        <span class="comment">// 当 b + c = a 时，P 在 P1 和 P2 组成的线段上</span></span><br><span class="line">        distance = <span class="number">0</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (lengthNextToPo * lengthNextToPo &gt;=</span><br><span class="line">        lengthCurToNext * lengthCurToNext + lengthCurToPo * lengthCurToPo) &#123;</span><br><span class="line">        <span class="comment">// 当 c * c &gt;= a * a + b * b 时组成直角三角形或钝角三角形，投影在 P1 延长线上</span></span><br><span class="line">        distance = lengthCurToPo</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (lengthCurToPo * lengthCurToPo &gt;=</span><br><span class="line">        lengthCurToNext * lengthCurToNext + lengthNextToPo * lengthNextToPo) &#123;</span><br><span class="line">        <span class="comment">// 当 b * b &gt; c * c + a * a 时组成直角三角形或钝角三角形，投影在 p2 延长线上</span></span><br><span class="line">        distance = lengthNextToPo</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 其他情况组成锐角三角形，则求三角形的高</span></span><br><span class="line">        <span class="keyword">const</span> p = (lengthCurToPo + lengthNextToPo + lengthCurToNext) / <span class="number">2</span> <span class="comment">// 半周长</span></span><br><span class="line">        <span class="keyword">const</span> s = <span class="built_in">Math</span>.sqrt(p * (p - lengthCurToNext) *</span><br><span class="line">            (p - lengthCurToPo) * (p - lengthNextToPo)) <span class="comment">// 海伦公式求面积</span></span><br><span class="line">        distance = <span class="number">2</span> * s / lengthCurToNext <span class="comment">// 点到线的距离（利用三角形面积公式求高)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> distance</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断点是否在矩形内</span></span><br><span class="line"><span class="comment"> * @param point 点对象</span></span><br><span class="line"><span class="comment"> * @param bounds 矩形边界对象</span></span><br><span class="line"><span class="comment"> * @returns 点在矩形内返回 true,否则返回 false</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">isPointInRect</span>(<span class="params">point, bounds</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> sw = bounds.getSouthWest() <span class="comment">// 西南脚点</span></span><br><span class="line">    <span class="keyword">const</span> ne = bounds.getNorthEast() <span class="comment">// 东北脚点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (point.lng &gt;= sw.lng &amp;&amp; point.lng &lt;= ne.lng &amp;&amp; point.lat &gt;= sw.lat &amp;&amp; point.lat &lt;= ne.lat)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 得到离鼠标点最近的折线点坐标</span></span><br><span class="line"><span class="comment"> * @param point 鼠标点</span></span><br><span class="line"><span class="comment"> * @param curPt，nextPt 折线上相邻两点</span></span><br><span class="line"><span class="comment"> * @param precision 误差，默认 2e-4</span></span><br><span class="line"><span class="comment"> * @returns &#123; polyLng, polyLat &#125; 折线点经纬度</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">genPointOnPolyline</span>(<span class="params">point, curPt, nextPt, precision = <span class="number">2e-4</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> pointLng, pointLat</span><br><span class="line">    <span class="keyword">const</span> precisionLng = curPt.lng - nextPt.lng</span><br><span class="line">    <span class="keyword">const</span> precisionLat = curPt.lat - nextPt.lat</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (precisionLng &lt; precision &amp;&amp; precisionLng &gt; -precision) &#123;</span><br><span class="line">        <span class="comment">// 当折线上两点经度几乎相同时（存在一定误差）</span></span><br><span class="line">        pointLng = curPt.lng</span><br><span class="line">        pointLat = point.lat</span><br><span class="line">        <span class="comment">// 创建生成点对象</span></span><br><span class="line">        <span class="keyword">return</span> &#123; pointLng, pointLat &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (precisionLat &lt; <span class="number">2e-6</span> &amp;&amp; precisionLat &gt; <span class="number">-2e-6</span>) &#123;</span><br><span class="line">        <span class="comment">// 当折线上两点纬度相同时（存在一定误差）</span></span><br><span class="line">        pointLat = curPt.lat</span><br><span class="line">        pointLng = point.lng</span><br><span class="line">        <span class="keyword">return</span> &#123; pointLng, pointLat &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 其他情况，求得点到折线的垂足坐标</span></span><br><span class="line">    <span class="keyword">const</span> k = (nextPt.lat - curPt.lat) / (nextPt.lng - curPt.lng)</span><br><span class="line">    <span class="comment">// 求得该点到线段的垂足坐标</span></span><br><span class="line">    <span class="comment">// 设线段的两端点为 pt1 和 pt2，斜率为：k = (pt2.y - pt1.y) / (pt2.x - pt1.x);</span></span><br><span class="line">    <span class="comment">// 该直线方程为：y = k * (x - pt1.x) + pt1.y。其垂线的斜率为 - 1 / k，</span></span><br><span class="line">    <span class="comment">// 垂线方程为：y = (-1 / k) * (x - point.x) + point.y</span></span><br><span class="line">    <span class="keyword">const</span> pointLng2 = (k * k * curPt.lng + k * (point.lat - curPt.lat) + point.lng) / (k * k + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">const</span> pointLat2 = k * (pointLng2 - curPt.lng) + curPt.lat</span><br><span class="line">    <span class="keyword">return</span> &#123; pointLng2, pointLat2 &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断点在一定误差范围内是否在折线上</span></span><br><span class="line"><span class="comment"> * @param point 鼠标点</span></span><br><span class="line"><span class="comment"> * @param polygon 区域多边形对象</span></span><br><span class="line"><span class="comment"> * @param precision 误差范围, 默认 2e-4</span></span><br><span class="line"><span class="comment"> * @returns 如果判断点不在折线上则返回false,否则返回true</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">isPointOnPloyline</span>(<span class="params">point, polygon, precision = <span class="number">2e-4</span></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 首先判断点是否在线的外包矩形内，如果在，则进一步判断，否则返回false</span></span><br><span class="line">    <span class="keyword">if</span> (!isPointInRect(point, polygon.getBounds())) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> distances = [] <span class="comment">// 点到折线每相邻两点的最短距离</span></span><br><span class="line">    <span class="keyword">const</span> pts = polygon.getPath() <span class="comment">// 折线路径点数组</span></span><br><span class="line">    pts.forEach(<span class="function">(<span class="params">p, i</span>) =&gt;</span> &#123;</span><br><span class="line">        distances.push(getPoToLineDis(point, pts[i], pts[i + <span class="number">1</span>]))</span><br><span class="line">        distances.sort()</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> minDistance = distances[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> (minDistance &lt; precision &amp;&amp; minDistance &gt; -precision) &#123;</span><br><span class="line">        <span class="comment">// 当最短距离小于误差值时，判断鼠标点在折线上</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 如果点到折线最短距离在误差范围内，则得到离该点最近的折线点坐标，否则返回鼠标点坐标</span></span><br><span class="line"><span class="comment"> * @param point 鼠标点</span></span><br><span class="line"><span class="comment"> * @param polygon 区域多边形对象</span></span><br><span class="line"><span class="comment"> * @param precision 误差，默认 2e-4</span></span><br><span class="line"><span class="comment"> * @returns 如果判断点不在折线上则返回该点（point），如果判断点在折线上则返回计算出的折线最近点（</span></span><br><span class="line"><span class="comment"> * 因为鼠标点选很难精确点在折线上，要允许一定误差，故需得到一个折线上的最近点）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">genMinDisPoint</span>(<span class="params">point, polygon, precision</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isPointInRect(point, polygon.getBounds())) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> curPt, nextPt</span><br><span class="line">    <span class="keyword">const</span> distances = [] <span class="comment">// 点到折线每相邻两点的最短距离</span></span><br><span class="line">    <span class="keyword">const</span> points = [] <span class="comment">// 折线相邻点</span></span><br><span class="line">    <span class="keyword">const</span> pts = polygon.getPath() <span class="comment">// 折线路径点数组</span></span><br><span class="line">    pts.forEach(<span class="function">(<span class="params">p, i</span>) =&gt;</span> &#123;</span><br><span class="line">        curPt = pts[i]</span><br><span class="line">        nextPt = pts[i + <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">const</span> distance = getPoToLineDis(point, curPt, nextPt)</span><br><span class="line">        <span class="comment">// 先将存储最短距离的数组排序，如果该两个相邻点与鼠标点计算出的最短距离与数组中最小距离相等，则存储该两点</span></span><br><span class="line">        distances.push(distance)</span><br><span class="line">        distances.sort()</span><br><span class="line">        <span class="keyword">if</span> (distance === distances[<span class="number">0</span>]) &#123;</span><br><span class="line">            points.concat([curPt, nextPt])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取得 points 最后两项，即最短距离最小时鼠标点两侧的折线点</span></span><br><span class="line">    curPt = points[points.length - <span class="number">2</span>]</span><br><span class="line">    nextPt = points[points.length - <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">const</span> minDistance = distances[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> (minDistance &lt; precision &amp;&amp; minDistance &gt; -precision) &#123;</span><br><span class="line">        <span class="comment">// 当最短距离小于误差值时，判断鼠标点在折线上，通过鼠标点和两侧相邻点，得到折线上的最近点</span></span><br><span class="line">        <span class="keyword">return</span> genPointOnPolyline(point, curPt, nextPt)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> point</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试一番，终于解决了缺陷，能够正常判断点是否在折线上，并生成构建自定义区域及一个闭合区域所需要的最近折线点。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>可以发现随着缺陷的不断解决，代码量却越来越多。毫无疑问，保持代码整洁，简化实现逻辑是一名开发人员应有的意识。不过在过度简化实现逻辑的过程中，我们是否会忽略许多用户实际使用时将会遭遇的错误呢。</p>
+<p>回顾该功能跌宕的开发流程，就会发现：</p>
+<ul>
+<li>如果折线不是一个闭合空间，而仅仅是较少点组成的几段线段时，三角形面积的算法遇见的缺陷没有出现的机会，将是最适合的算法。</li>
+<li>如果折线点较多，但是其中不存在经度或纬度几乎相等的相邻点时，百度提供的算法又将是最适合的算法。</li>
+<li>如果折线点较多，且情况复杂时，采用最后“较重”的算法，才能避免缺陷，成为一枚正常运转的齿轮。</li>
+</ul>
+<p>所以“因地制宜”是一种非常重要的思想，不同的数据结构有不同的优劣势，同样不能因为怕某种框架太“轻”，覆盖面窄就避免使用，也不能因为框架太“重”就回避它。整日争辩哪种技术最好是没有意义的，我们需要做的是了解一种技术的最适使用场景，遇见该场景时使用它，享受技术开发者奉献给使用者的那份便捷。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://7xinvi.com1.z0.glb.clouddn.com/wechat_reward.JPG" alt="honoka 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://7xinvi.com1.z0.glb.clouddn.com/alipay_reward.JPG" alt="honoka 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    honoka
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://honoka.me/2015/04/16/高德地图开发小计の如何判断点是否在折线上/" title="高德地图开发小记の如何判断点是否在折线上">http://honoka.me/2015/04/16/高德地图开发小计の如何判断点是否在折线上/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="" rel="external nofollow" target="_blank"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a></a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LBS/" rel="tag"># LBS</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/16/程序员应如何提高实效？读《程序员修炼之道》有感/" rel="prev" title="程序员应如何提高实效?读《程序员修炼之道》有感">
+                程序员应如何提高实效?读《程序员修炼之道》有感 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://7xinvi.com1.z0.glb.clouddn.com/20140802132201_z3JTX.jpeg" alt="honoka">
+            
+              <p class="site-author-name" itemprop="name">honoka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/nitta-honoka/" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:xal2008sc@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.weibo.com/2623091004" target="_blank" title="weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初期方案"><span class="nav-number">2.</span> <span class="nav-text">初期方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#他山之石"><span class="nav-number">3.</span> <span class="nav-text">他山之石</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终解决"><span class="nav-number">4.</span> <span class="nav-text">最终解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">honoka</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'LssTr3OoGJsXl2M9QRSRwDim-gzGzoHsz',
+        appKey: 'cu2paQtYL2zmRufDykCG1aG8',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
